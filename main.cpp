@@ -1,12 +1,17 @@
-#include "headers.h"
-#include <chrono>
+#include "functions.hpp"
+#include "utilities.hpp"
 #include <cstdlib>
+#include <chrono>
 
 using namespace std;
 
-long double f(long double x);
+template <class T>
+T f(T x){
+	return std::exp(-std::pow(x, 2.0));
+}
 
 int main(int argc, char *argv[]) {
+
 	if( argc == 1){
 		cout << "usage: ./main <a> <b> <prec> <n>" << endl;
 		cout << "[a, b]: integration interval" << endl;
@@ -21,27 +26,19 @@ int main(int argc, char *argv[]) {
   long double eps = pow(10, -nb_digits);
   int n = atoi(argv[4]);
 
+	// use adaptive integration
 	auto tic1 = chrono::steady_clock::now();
-  long double sol = gauss_legendre<long double>(a, b, f, n, eps);
+  long double sol_adapt = adaptive_integration<float>(a, b, f, n, eps);
 	auto tac1 = chrono::steady_clock::now();
-
-	auto tic2 = chrono::steady_clock::now();
-  long double sol_adapt = adaptive_integration<long double>(a, b, f, n, eps, 0);
-	auto tac2 = chrono::steady_clock::now();
 
 	cout.precision(12);
 
-	// cout << "sol:\t" << "time1:\t"  << "sol_adapt:\t" << "time2 :"  << endl;
-	cout << sol << "\t";
-	cout << chrono::duration<double, milli>(tac1 - tic1).count() << "\t";
+	long double exact_solution = sqrt(M_PI);
+
 	cout << sol_adapt << "\t";
-	cout << chrono::duration<double, milli>(tac2 - tic2).count() << endl;
-  // printf("%lf\n", sol);
-  // // printf("%lf\n", sol_adapt);
+	cout << chrono::duration<double, milli>(tac1 - tic1).count() << "\t";
+	cout << exact_solution << endl;
+
 
 	return 0;
-}
-
-long double f(long double x){
-	return pow(x, 4) * exp(-x);
 }
