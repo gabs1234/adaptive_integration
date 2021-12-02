@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	int max_prec = numeric_limits<long double>::digits10;
 
 	float a = strtof(argv[1], NULL);
-  float b = strtof(argv[2], NULL);
+	float b = strtof(argv[2], NULL);
 	int nb_digits = strtold(argv[3], NULL);
 	if( nb_digits > max_prec ){
 		cout << "maximal machine precision of: " << max_prec;
@@ -40,11 +40,11 @@ int main(int argc, char *argv[]) {
 
 	// Calculate the roots
 	auto tic1 = chrono::steady_clock::now();
-  legendre_roots(n, x, eps);
+	legendre_roots(n, x, eps);
 	auto tac1 = chrono::steady_clock::now();
 	// Calculate the weights
 	auto tic2 = chrono::steady_clock::now();
-  gauss_legendre_weights(n, x, w);
+	gauss_legendre_weights(n, x, w);
 	auto tac2 = chrono::steady_clock::now();
 
 	cout << chrono::duration<double, milli>(tac1 - tic1).count() << "\t";
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 
 	// // use adaptive integration
 	// auto tic1 = chrono::steady_clock::now();
-  // long double sol_adapt = adaptive_integration<long double>(a, b, f, n, eps);
+	// long double sol_adapt = adaptive_integration<long double>(a, b, f, n, eps);
 	// auto tac1 = chrono::steady_clock::now();
 	//
 	//
@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) {
 	// cout << sol_adapt << "\t";
 	// cout << chrono::duration<double, milli>(tac1 - tic1).count() << "\t";
 	// cout << exact_solution << endl;
-
 
 	return 0;
 }

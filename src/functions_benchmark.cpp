@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	int max_prec = numeric_limits<long double>::digits10;
 
 	float a = strtof(argv[1], NULL);
-  float b = strtof(argv[2], NULL);
+	float b = strtof(argv[2], NULL);
 	int nb_digits = strtold(argv[3], NULL);
 	if( nb_digits > max_prec ){
 		cout << "maximal machine precision of: " << max_prec;
@@ -41,22 +41,22 @@ int main(int argc, char *argv[]) {
 
 	// Calculate polynomial in x
 	auto tic1 = chrono::steady_clock::now();
-  P(n, xp);
+	P(n, xp);
 	auto tac1 = chrono::steady_clock::now();
 
 	// Calculate derivative of P in x
 	auto tic2 = chrono::steady_clock::now();
-  dP(n, xp);
+	dP(n, xp);
 	auto tac2 = chrono::steady_clock::now();
 
 	// Calculate the roots
 	auto tic3 = chrono::steady_clock::now();
-  legendre_roots(n, x, eps);
+	legendre_roots(n, x, eps);
 	auto tac3 = chrono::steady_clock::now();
 
 	// Calculate the weights
 	auto tic4 = chrono::steady_clock::now();
-  gauss_legendre_weights(n, x, w);
+	gauss_legendre_weights(n, x, w);
 	auto tac4 = chrono::steady_clock::now();
 
 	// Solve

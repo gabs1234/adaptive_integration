@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	// init integration variables
 	int max_prec = numeric_limits<long double>::digits10;
 	float a = strtof(argv[1], NULL);
-  float b = strtof(argv[2], NULL);
+	float b = strtof(argv[2], NULL);
 	int nb_digits = strtold(argv[3], NULL);
 	if( nb_digits > max_prec ){
 		cout << "maximal machine precision of: " << max_prec;
@@ -42,10 +42,10 @@ int main(int argc, char *argv[]) {
 
 	// init MPI
 	int rank, nb_procs;
-  MPI_Status status;
-  MPI::Init();
-  MPI_Comm_rank(MPI_COMM_WORLD,&rank);
-  MPI_Comm_size(MPI_COMM_WORLD,&nb_procs);
+	MPI_Status status;
+	MPI::Init();
+	MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+	MPI_Comm_size(MPI_COMM_WORLD,&nb_procs);
 
 	float start=0, end=0;
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// use adaptive integration per process
-  long double sol_adapt = adaptive_integration<long double>(start, end, f, n, eps);
+	long double sol_adapt = adaptive_integration<long double>(start, end, f, n, eps);
 
 	double t2 = MPI_Wtime();
 	cout << rank << ": " << sol_adapt << "\t" << t2 - t1 << endl;

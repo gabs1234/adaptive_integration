@@ -12,8 +12,8 @@ int main(int argc, char const *argv[]) {
 		return 1;
 	}
 
-  int n = atoi(argv[1]);
-  int nb_points = atoi(argv[2]);
+	int n = atoi(argv[1]);
+	int nb_points = atoi(argv[2]);
 
 	long double x, eps = 10e-6;
 	long double roots[n];
