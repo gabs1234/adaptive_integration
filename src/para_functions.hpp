@@ -147,7 +147,6 @@ void sub_intervals(T a, T b, int nb_procs, int nb_points, T (&df)[], T (&interva
 			sums[k] = sums[k] + std::abs(df[i]);
 		}
 	}
-	print_list<T>(nb_procs, sums);
 
 	// Get total sum
 	T sum = 0;
@@ -171,8 +170,8 @@ void sub_intervals(T a, T b, int nb_procs, int nb_points, T (&df)[], T (&interva
 		interval[i] = interval[i] + interval[i-1];
 	}
 	interval[nb_procs] = b;
-	std::cout << "interval list: ";
-	print_list<T>(nb_procs+1, interval);
+	// std::cout << "interval list: ";
+	// print_list<T>(nb_procs+1, interval);
 }
 
 template <class T>
