@@ -50,7 +50,7 @@ T legendre_root_est(int k, int n){
 }
 
 template <class T>
-void legendre_roots(int n, T roots[], T eps){
+void legendre_roots(int n, T* roots, T eps){
 	T x0;
 	int stop = n >> 1;
 
@@ -68,7 +68,7 @@ void legendre_roots(int n, T roots[], T eps){
 }
 
 template <class T>
-void gauss_legendre_weights(int n, T roots[], T weight[]){
+void gauss_legendre_weights(int n, T* roots, T* weight){
 	int stop = n/2;
 
 	for( int i = 0; i <= stop; i++ ){
@@ -78,7 +78,7 @@ void gauss_legendre_weights(int n, T roots[], T weight[]){
 }
 
 template <class T>
-T gauss_legendre(float a, float b, T (*f)(T), int n, T (&x)[], T (&w)[], T eps){
+T gauss_legendre(float a, float b, T (*f)(T), int n, T* x, T* w, T eps){
 	float hm = b - a;
 	float hp = b + a;
 
@@ -92,7 +92,7 @@ T gauss_legendre(float a, float b, T (*f)(T), int n, T (&x)[], T (&w)[], T eps){
 }
 
 template <class T>
-T adaptive_integration_rec(float a, float b, T (*f)(T), int n, T (&x)[], T (&w)[], T eps, int iteration){
+T adaptive_integration_rec(float a, float b, T (*f)(T), int n, T* x, T* w, T eps, int iteration){
 	// TODO: find solution to not have to re declare variables each time...
 	float half = (a+b)/2.;
 	T Q_curr = gauss_legendre<T>(a, b, f, n, x, w, eps);
@@ -123,7 +123,7 @@ T adaptive_integration(float a, float b, T (*f)(T), int n, T eps){
 /* Load balancing functions */
 
 template <class T>
-void derivative(T (*f)(T), int nb_points, T a, T b, T (&df)[]){
+void derivative(T (*f)(T), int nb_points, T a, T b, T* df){
 	T h = DF_STEP;
 	for( int i = 0; i < nb_points; i++ ){
 		// or store points in advance ?
@@ -132,7 +132,7 @@ void derivative(T (*f)(T), int nb_points, T a, T b, T (&df)[]){
 }
 
 template <class T>
-void sub_intervals(T a, T b, int nb_procs, int nb_points, T (&df)[], T (&interval)[]){
+void sub_intervals(T a, T b, int nb_procs, int nb_points, T* df, T* interval){
 	// Divide the interval into nb_procs sub-intervals
 	int sep = std::round(nb_points/nb_procs);
 
@@ -175,7 +175,7 @@ void sub_intervals(T a, T b, int nb_procs, int nb_points, T (&df)[], T (&interva
 }
 
 template <class T>
-void load_balance(T a, T b, int nb_procs, T (*f)(T), T (&interval)[]){
+void load_balance(T a, T b, int nb_procs, T (*f)(T), T* interval){
 	// approximate derivative of f
 	int nb_points = (int)((b-a)/(DF_STEP));
 	T df[nb_points];
