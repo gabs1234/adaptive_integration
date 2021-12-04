@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 
 	// Initialise starting intervals for integration
 	if( rank == 0 ){
-&		// Load balancing: find subintervals for each process
+		// Load balancing: find subintervals for each process
 		float interval[nb_procs+1];
 		load_balance<float>(a, b, nb_procs, f, interval);
 
