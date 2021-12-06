@@ -1,13 +1,13 @@
-# TODO: make a good makefile
+# TODO: use variables
 
 main: src/main.cpp src/functions.hpp src/utilities.hpp
 	g++ src/main.cpp -o bin/main -lm
 
-mpi_main: src/para_main.cpp src/para_functions.hpp src/utilities.hpp
-	mpic++ src/para_main.cpp -o bin/para_main -lm
+mpi_main: src/mpi_main.cpp src/mpi_functions.hpp src/utilities.hpp
+	mpic++ src/mpi_main.cpp -o bin/mpi_main -lm
 
-mpi_bench: src/para_benchmark.cpp src/para_functions.hpp src/utilities.hpp
-	mpic++ src/para_benchmark.cpp -o bin/para_bench -lm
+mpi_bench: src/mpi_benchmark.cpp src/mpi_functions.hpp src/utilities.hpp
+	mpic++ src/mpi_benchmark.cpp -o bin/mpi_bench -lm
 
 plot: src/legendre_functions.cpp src/functions.hpp src/utilities.hpp
 	g++ src/legendre_functions.cpp -o bin/plot_legendre -lm

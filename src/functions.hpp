@@ -47,7 +47,7 @@ T legendre_root_est(int k, int n){
 }
 
 template <class T>
-void legendre_roots(int n, T roots[], T eps){
+void legendre_roots(int n, T* roots, T eps){
 	T x0;
 	int stop = n >> 1;
 
@@ -65,7 +65,7 @@ void legendre_roots(int n, T roots[], T eps){
 }
 
 template <class T>
-void gauss_legendre_weights(int n, T roots[], T weight[]){
+void gauss_legendre_weights(int n, T* roots, T* weight){
 	int stop = n/2;
 
 	for( int i = 0; i <= stop; i++ ){
@@ -75,7 +75,7 @@ void gauss_legendre_weights(int n, T roots[], T weight[]){
 }
 
 template <class T>
-T gauss_legendre(float a, float b, T (*f)(T), int n, T (&x)[], T (&w)[], T eps){
+T gauss_legendre(float a, float b, T (*f)(T), int n, T* x, T* w, T eps){
 	float hm = b - a;
 	float hp = b + a;
 
@@ -89,7 +89,7 @@ T gauss_legendre(float a, float b, T (*f)(T), int n, T (&x)[], T (&w)[], T eps){
 }
 
 template <class T>
-T adaptive_integration_rec(float a, float b, T (*f)(T), int n, T (&x)[], T (&w)[], T eps, int iteration){
+T adaptive_integration_rec(float a, float b, T (*f)(T), int n, T* x, T* w, T eps, int iteration){
 	// TODO: find solution to not have to re declare variables each time...
 	float half = (a+b)/2.;
 	T Q_curr = gauss_legendre<T>(a, b, f, n, x, w, eps);
@@ -117,8 +117,8 @@ T adaptive_integration(float a, float b, T (*f)(T), int n, T eps){
 	gauss_legendre_weights<T>(n, x, w);
 	std::cout << "weights calculated!" << std::endl;
 
-	print_list(n, x);
-	print_list(n, w);
+	// print_list(n, x);
+	// print_list(n, w);
 
 	return adaptive_integration_rec<T>(a, b, f, n, x, w, eps, (int)0);
 }
