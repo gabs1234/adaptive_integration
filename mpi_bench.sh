@@ -1,6 +1,7 @@
 #!/bin/bash
 
 make mpi_bench
+rm data/para_bench.dat
 
 for i in {1..4}
 do

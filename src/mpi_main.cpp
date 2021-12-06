@@ -30,12 +30,15 @@ int main(int argc, char *argv[]) {
 
 	// init integration variables
 	int max_prec = numeric_limits<long double>::digits10;
-	
-	// float a = strtof(argv[1], NULL);
-	// float b = strtof(argv[2], NULL);
 
 	float a = -M_PI;
 	float b = M_PI;
+
+	// Uncomment to use in parameters
+	// float a = strtof(argv[1], NULL);
+	// float b = strtof(argv[2], NULL);
+
+	
 
 	int nb_digits = strtold(argv[3], NULL);
 	if( nb_digits > max_prec ){

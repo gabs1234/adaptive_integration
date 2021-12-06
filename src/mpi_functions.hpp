@@ -3,7 +3,7 @@
 #include <cmath>
 
 #define MAX_ITER 50 //
-#define DF_STEP .1 //
+#define DF_STEP .001 //
 
 /* Gauss Legendre integration functions */
 template <class T>
@@ -137,41 +137,32 @@ void sub_intervals(T a, T b, int nb_procs, int nb_points, T* df, T* interval){
 	int sep = std::round(nb_points/nb_procs);
 
 	// get sums per sub interval
-	T sums[nb_procs];
+	T inv_sums[nb_procs];
 	for( int k = 0; k < nb_procs; k++ ){
-		sums[k] = 0;
+		inv_sums[k] = 0;
 		for( int i = k*sep; i < (k+1)*sep; i++ ){
-			if( i >= nb_points ){
+			if( i > nb_points ){
 				break;
 			}
-			sums[k] = sums[k] + std::abs(df[i]);
+			inv_sums[k] = inv_sums[k] + std::abs(df[i]);
 		}
+		inv_sums[k] = 1/inv_sums[k];
 	}
 
 	// Get total sum
-	T sum = 0;
-	for( int i = 0; i < nb_points; i++ ){
-		sum = sum + std::abs(df[i]);
+	T inv_sum = 0;
+	for( int i = 0; i < nb_procs; i++ ){
+		inv_sum = inv_sum + inv_sums[i];
 	}
 
 	// Get weights for each sub interval
 	interval[0] = a;
-	T len = (b-a);
-	T k = len/((nb_procs-1)*sum);
-	// for( int i = 0; i < nb_procs; i++ ){
-	// 	interval[i+1] = sums[i]/sum;
-	// }
+	T l = (b-a);
 	for( int i = 0; i < nb_procs; i++ ){
-		interval[i+1] = k*(sum-sums[i]);
+		interval[i+1] = interval[i] + l*inv_sums[i]/inv_sum;
 	}
 
-	// Use weights to deduce sub intervals
-	for( int i = 1; i < nb_procs+1; i++ ){
-		interval[i] = interval[i] + interval[i-1];
-	}
 	interval[nb_procs] = b;
-	// std::cout << "interval list: ";
-	// print_list<T>(nb_procs+1, interval);
 }
 
 template <class T>
